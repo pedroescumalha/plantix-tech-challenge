@@ -1,4 +1,4 @@
-import { buildServer } from "./server";
+import { buildServer } from "./api";
 
 const server = buildServer();
 server.start();
