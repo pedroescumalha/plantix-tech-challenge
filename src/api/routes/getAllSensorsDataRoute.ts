@@ -1,20 +1,20 @@
 import type { FastifyInstance } from "fastify";
 import { endpointsV1 } from "./endpoints";
 import type z from "zod";
-import { sensorsDataSchema } from "./sensorsDataSchema";
-import { createPaginationResponseSchema, paginationQuerySchema } from "./paginationSchema";
+import {
+    type getAllSensorsDataResponseSchema,
+    getAllSensorsDataQueryStringSchema,
+} from "./sensorsDataSchema";
 
-const schema = createPaginationResponseSchema(sensorsDataSchema);
-
-type QueryString = z.infer<typeof paginationQuerySchema>;
-type Response = z.infer<typeof schema>;
+type QueryString = z.infer<typeof getAllSensorsDataQueryStringSchema>;
+type Response = z.infer<typeof getAllSensorsDataResponseSchema>;
 
 export function getAllSensorsDataRoute(server: FastifyInstance): Promise<void> {
     server.get<{ Querystring: QueryString, Reply: Response }>(
         endpointsV1.getAllSensorsData,
         {
             schema: {
-                querystring: paginationQuerySchema,
+                querystring: getAllSensorsDataQueryStringSchema,
             },
         },
         (_, reply) => {
