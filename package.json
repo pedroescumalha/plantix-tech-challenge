@@ -1,0 +1,27 @@
+{
+  "name": "plantix-tech-challenge",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/pedroescumalha/plantix-tech-challenge.git",
+  "author": "Pedro Escumalha <pedrosimoes93@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.12.12",
+    "@typescript-eslint/eslint-plugin": "^7.9.0",
+    "@typescript-eslint/parser": "^7.9.0",
+    "eslint": "^9.2.0",
+    "eslint-plugin-jsdoc": "^48.2.5",
+    "globstar": "^1.0.0",
+    "nodemon": "^3.1.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  },
+  "scripts": {
+    "start": "node dist/index.js",
+    "build": "tsc",
+    "dev": "nodemon --watch 'src/**' --ext 'ts,json' --ignore 'src/**/*.spec.ts' --ignore 'src/**/*.test.ts' --exec 'ts-node src/index.ts'",
+    "lint": "eslint ./src",
+    "lint:fix": "eslint ./src --fix",
+    "test": "globstar -- node --test --require ts-node/register ./src/**/*.test.ts"
+  }
+}
