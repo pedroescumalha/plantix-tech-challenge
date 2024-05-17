@@ -15,7 +15,7 @@ const serverOptions = {
 export function buildServer(
     configureServer?: (options: typeof serverOptions) => void
 ): Server {
-    const server = fastify();
+    const server = fastify({ logger: true });
     
     if (configureServer) {
         configureServer(serverOptions);
