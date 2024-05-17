@@ -1,5 +1,6 @@
 import fastify from "fastify";
 import { routes } from "./routes";
+import { fastifyZodSchemaPlugin } from "./plugins/zodValidationPlugin";
 
 type Server = {
     port: number;
@@ -21,6 +22,8 @@ export function buildServer(
         configureServer(serverOptions);
     }
 
+    server.register(fastifyZodSchemaPlugin);
+
     routes.forEach((route) => {
         server.register(route);
     });
@@ -32,13 +35,11 @@ export function buildServer(
             server.listen({
                 port: serverOptions.port,
                 host: serverOptions.host,
-            }, (err, address) => {
+            }, (err) => {
                 if (err) {
                     console.error(err);
                     process.exit(1);
                 }
-
-                console.log(`Server listening at ${address}`);
             });
         },
     };
