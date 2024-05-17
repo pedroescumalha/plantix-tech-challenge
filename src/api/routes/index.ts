@@ -1,7 +1,7 @@
-import { getSensorRoute } from "./getSensorRoute";
+import { getAllSensorsDataRoute } from "./getAllSensorsDataRoute";
 import { healthCheckRoute } from "./healthCheckRoute";
 
 export const routes = [
     healthCheckRoute,
-    getSensorRoute,
+    getAllSensorsDataRoute,
 ];

@@ -1,4 +1,4 @@
 export const endpointsV1 = {
     healthCheck: "/v1/health",
-    getSensor: "/v1/sensors/data",
+    getAllSensorsData: "/v1/sensors/data",
 };
