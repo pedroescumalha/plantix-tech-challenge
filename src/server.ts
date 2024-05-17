@@ -1,4 +1,5 @@
 import fastify from "fastify";
+import { routes } from "./routes";
 
 type Server = {
     port: number;
@@ -20,23 +21,25 @@ export function buildServer(
         configureServer(serverOptions);
     }
 
-    const start = (): void => {
-        server.listen({
-            port: serverOptions.port,
-            host: serverOptions.host,
-        }, (err, address) => {
-            if (err) {
-                console.error(err);
-                process.exit(1);
-            }
-
-            console.log(`Server listening at ${address}`);
-        });
-    };
+    routes.forEach((route) => {
+        server.register(route);
+    });
 
     return {
         host: serverOptions.host,
         port: serverOptions.port,
-        start,
+        start: (): void => {
+            server.listen({
+                port: serverOptions.port,
+                host: serverOptions.host,
+            }, (err, address) => {
+                if (err) {
+                    console.error(err);
+                    process.exit(1);
+                }
+
+                console.log(`Server listening at ${address}`);
+            });
+        },
     };
 }
