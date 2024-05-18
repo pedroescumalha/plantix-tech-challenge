@@ -5,8 +5,7 @@ import { getInstance } from "./dbClient";
 export type SensorDataInput = {
     externalId: string;
     type: string;
-    value: string;
-    valueType: string;
+    value: number;
     unit: string;
     latitude: number;
     longitude: number;
@@ -28,7 +27,6 @@ export async function createSensorData(sensorData: SensorDataInput): Promise<Sen
             latitude: sensorData.latitude,
             longitude: sensorData.longitude,
             timestamp: sensorData.timestamp,
-            valueType: sensorData.valueType,
             externalId: sensorData.externalId,
         },
     });
