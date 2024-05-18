@@ -7,7 +7,7 @@ CREATE TABLE "sensor_data" (
     "unit" TEXT NOT NULL,
     "latitude" REAL NOT NULL,
     "longitude" REAL NOT NULL,
-    "timestamp" BIGINT NOT NULL,
-    "created_at" BIGINT NOT NULL DEFAULT (strftime('%s', 'now')),
-    "updated_at" BIGINT NOT NULL DEFAULT (strftime('%s', 'now'))
+    "timestamp" DATETIME NOT NULL,
+    "created_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
