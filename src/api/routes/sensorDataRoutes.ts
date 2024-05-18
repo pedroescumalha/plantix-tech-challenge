@@ -1,7 +1,7 @@
 import type { FastifyInstance } from "fastify";
-import { endpointsV1 } from "./endpoints";
+import { endpointsV1 } from "./utils/endpoints";
 import z from "zod";
-import { createPaginationResponseSchema, paginationQuerySchema } from "./paginationSchema";
+import { createPaginationResponseSchema, paginationQuerySchema } from "./utils/schemas";
 import {
     HumidityUnit,
     LightUnit,

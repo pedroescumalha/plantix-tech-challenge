@@ -1,5 +1,5 @@
 import type { FastifyInstance } from "fastify";
-import { endpointsV1 } from "./endpoints";
+import { endpointsV1 } from "./utils/endpoints";
 import z from "zod";
 
 const healthCheckResponseSchema = z.object({
