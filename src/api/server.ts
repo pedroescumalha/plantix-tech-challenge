@@ -1,6 +1,6 @@
 import fastify from "fastify";
 import { routes } from "./routes";
-import { fastifyZodSchemaPlugin } from "./plugins/zodValidationPlugin";
+import { fastifyZodSchemaPlugin, errorHandler } from "./plugins";
 
 type Server = {
     port: number;
@@ -23,6 +23,8 @@ export function buildServer(
     }
 
     server.register(fastifyZodSchemaPlugin);
+
+    server.setErrorHandler(errorHandler);
 
     routes.forEach((route) => {
         server.register(route);
