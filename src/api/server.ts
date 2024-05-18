@@ -11,12 +11,18 @@ type Server = {
 const serverOptions = {
     port: 8080,
     host: "localhost",
+    onDisconnect: (log: (message: string) => void): Promise<void> => {
+        console.log("!!!!!!!!!!");
+        log("disconnecting server");
+        return Promise.resolve();
+    },
 };
 
 export function buildServer(
     configureServer?: (options: typeof serverOptions) => void
 ): Server {
     const server = fastify({ logger: true });
+    server.log.info("");
     
     if (configureServer) {
         configureServer(serverOptions);
@@ -26,6 +32,10 @@ export function buildServer(
 
     routes.forEach((route) => {
         server.register(route);
+    });
+
+    server.addHook("onClose", async () => {
+        await serverOptions.onDisconnect(server.log.info);
     });
 
     return {
