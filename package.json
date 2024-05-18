@@ -17,7 +17,7 @@
     "typescript": "^5.4.5"
   },
   "scripts": {
-    "setup": "yarn install && yarn build && yarn prisma generate",
+    "setup": "yarn install && yarn build && yarn prisma generate && yarn migrate",
     "create:migration": "yarn prisma migrate dev --create-only",
     "migrate": "yarn prisma migrate deploy",
     "start": "node dist/index.js",
