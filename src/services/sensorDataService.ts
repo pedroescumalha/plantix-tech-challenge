@@ -32,24 +32,30 @@ export enum LightUnit {
     FOOTCANDLE = "fc",
 }
 
+type UnitType = TemperatureUnit | LightUnit | HumidityUnit | PressureUnit;
+
 type SensorDataInput = {
     externalId: string;
     value: number;
     latitude: number;
     longitude: number;
     timestamp: Date;
-} & (
-    { type: SensorType.TEMPERATURE, unit: TemperatureUnit } |
-    { type: SensorType.LIGHT, unit: LightUnit } |
-    { type: SensorType.HUMIDITY, unit: HumidityUnit } |
-    { type: SensorType.PRESSURE, unit: PressureUnit }
-);
+    type: SensorType;
+    unit: UnitType;
+};
 
 type SensorDataOutput = SensorDataInput & {
     id: number;
     createdAt: Date;
     updatedAt: Date;
 }
+
+const allowedUnits: Record<SensorType, string[]> = {
+    TEMPERATURE: Object.values(TemperatureUnit),
+    PRESSURE: Object.values(PressureUnit),
+    HUMIDITY: Object.values(HumidityUnit),
+    LIGHT: Object.values(LightUnit),
+};
 
 export async function getSensorData(
     input: PaginatedInput,
@@ -67,18 +73,31 @@ export async function getSensorData(
     const total = await totalAsync;
 
     return {
-        data: res,
+        data: res.map((sensorData) => {
+            return {
+                id: sensorData.id,
+                externalId: sensorData.externalId,
+                longitude: sensorData.longitude,
+                latitude: sensorData.latitude,
+                value: sensorData.value,
+                timestamp: sensorData.timestamp,
+                createdAt: sensorData.createdAt,
+                updatedAt: sensorData.updatedAt,
+                type: sensorData.type as SensorType,
+                unit: sensorData.unit as UnitType,
+            };
+        }),
         take: input.take,
         skip: input.skip,
         total,
     };
 }
 
-function countSensorData(): Promise<number> {
-    return getInstance().sensorData.count();
-}
-
 export async function createSensorData(input: SensorDataInput): Promise<SensorDataOutput> {
+    if (!isUnitValid(input.type, input.unit)) {
+        throw new Error();
+    }
+
     const res = await getInstance().sensorData.create({
         data: {
             type: input.type,
@@ -103,4 +122,12 @@ export async function createSensorData(input: SensorDataInput): Promise<SensorDa
         type: res.type as typeof input.type,
         unit: res.unit as typeof input.unit,
     };
+}
+
+function isUnitValid(sensorType: SensorType, unit: string): boolean {
+    return allowedUnits[sensorType].includes(unit);
+}
+
+function countSensorData(): Promise<number> {
+    return getInstance().sensorData.count();
 }
