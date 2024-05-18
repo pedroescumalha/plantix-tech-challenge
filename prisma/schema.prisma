@@ -11,8 +11,7 @@ model SensorData {
   id         Int    @id @default(autoincrement())
   externalId String @map("external_id")
   type       String
-  value      String
-  valueType  String @map("value_type")
+  value      Float
   unit       String
   latitude   Float
   longitude  Float
