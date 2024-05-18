@@ -1,5 +1,4 @@
-import { createSensorDataRoute } from "./createSensorDataRoute";
-import { getAllSensorsDataRoute } from "./getAllSensorsDataRoute";
+import { createSensorDataRoute, getAllSensorsDataRoute } from "./sensorDataRoutes";
 import { healthCheckRoute } from "./healthCheckRoute";
 
 export const routes = [
