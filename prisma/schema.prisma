@@ -1,13 +1,10 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "sqlite"
-  url      = "file:memdb1?mode=memory&cache=shared"
+  url      = "file:./dev.db"
 }
 
 model SensorData {
@@ -20,8 +17,8 @@ model SensorData {
   latitude   Float
   longitude  Float
   timestamp  BigInt
-  createdAt  BigInt @default(dbgenerated("extract(epoch from now())")) @map("created_at")
-  updatedAt  BigInt @default(dbgenerated("extract(epoch from now())")) @map("updated_at")
+  createdAt  BigInt @default(dbgenerated("(strftime('%s', 'now'))")) @map("created_at")
+  updatedAt  BigInt @default(dbgenerated("(strftime('%s', 'now'))")) @map("updated_at")
 
   @@map("sensor_data")
 }

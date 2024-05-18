@@ -9,6 +9,6 @@ CREATE TABLE "sensor_data" (
     "latitude" REAL NOT NULL,
     "longitude" REAL NOT NULL,
     "timestamp" BIGINT NOT NULL,
-    "created_at" BIGINT NOT NULL DEFAULT extract(epoch from now()),
-    "updated_at" BIGINT NOT NULL DEFAULT extract(epoch from now())
+    "created_at" BIGINT NOT NULL DEFAULT (strftime('%s', 'now')),
+    "updated_at" BIGINT NOT NULL DEFAULT (strftime('%s', 'now'))
 );

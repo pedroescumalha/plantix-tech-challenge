@@ -12,25 +12,25 @@
     "eslint": "^8.56.0",
     "globstar": "^1.0.0",
     "nodemon": "^3.1.0",
+    "prisma": "5.14.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5"
   },
   "scripts": {
-    "setup": "yarn install && yarn build && npx prisma generate",
-    "create:migration": "npx prisma migrate dev --create-only",
+    "setup": "yarn install && yarn build && yarn prisma generate",
+    "create:migration": "yarn prisma migrate dev --create-only",
+    "migrate": "yarn prisma migrate deploy",
     "start": "node dist/index.js",
     "build": "tsc",
     "dev": "nodemon --watch 'src/**' --ext 'ts,json' --ignore 'src/**/*.spec.ts' --ignore 'src/**/*.test.ts' --exec 'ts-node src/index.ts'",
-    "lint": "npx prisma validate && eslint ./src",
-    "lint:fix": "npx prisma format && eslint ./src --fix",
+    "lint": "yarn prisma validate && eslint ./src",
+    "lint:fix": "yarn prisma format && eslint ./src --fix",
     "test": "globstar -- node --test --require ts-node/register ./src/**/*.test.ts"
   },
   "dependencies": {
     "@prisma/client": "5.14.0",
     "fastify": "^4.27.0",
     "fastify-plugin": "^4.5.1",
-    "prisma": "^5.14.0",
-    "sqlite3": "^5.1.7",
     "zod": "^3.23.8"
   }
 }
