@@ -22,4 +22,6 @@ model SensorData {
   timestamp  BigInt
   createdAt  BigInt @default(dbgenerated("extract(epoch from now())")) @map("created_at")
   updatedAt  BigInt @default(dbgenerated("extract(epoch from now())")) @map("updated_at")
+
+  @@map("sensor_data")
 }
