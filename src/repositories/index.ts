@@ -1,2 +1,2 @@
 export { init } from "./dbClient";
-export { createSensorData } from "./sensorDataRepository";
+export { createSensorData, getSensorData } from "./sensorDataRepository";

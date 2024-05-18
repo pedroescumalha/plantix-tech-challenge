@@ -1,3 +1,5 @@
+import { Prisma } from "@prisma/client";
+import type { PaginatedInput, PaginatedOutput } from "../common/types";
 import { getInstance } from "./dbClient";
 
 export type SensorDataInput = {
@@ -32,4 +34,31 @@ export async function createSensorData(sensorData: SensorDataInput): Promise<Sen
     });
 
     return res;
+}
+
+export async function getSensorData(
+    input: PaginatedInput
+): Promise<PaginatedOutput<SensorDataOutput>> {
+    const totalAsync = countSensorData();
+
+    const res = await getInstance().sensorData.findMany({
+        skip: input.skip,
+        take: input.take,
+        orderBy: {
+            updatedAt: Prisma.SortOrder.desc,
+        },
+    });
+
+    const total = await totalAsync;
+
+    return {
+        data: res,
+        take: input.take,
+        skip: input.skip,
+        total,
+    };
+}
+
+function countSensorData(): Promise<number> {
+    return getInstance().sensorData.count();
 }
