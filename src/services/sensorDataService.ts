@@ -1,4 +1,6 @@
-import * as repositories from "../repositories";
+import { Prisma } from "@prisma/client";
+import type { PaginatedInput, PaginatedOutput } from "../common/types";
+import { getInstance } from "./dbClient";
 
 export enum SensorType {
     TEMPERATURE = "TEMPERATURE",
@@ -49,17 +51,44 @@ type SensorDataOutput = SensorDataInput & {
     updatedAt: Date;
 }
 
-export const getSensorData = repositories.getSensorData;
+export async function getSensorData(
+    input: PaginatedInput,
+): Promise<PaginatedOutput<SensorDataOutput>> {
+    const totalAsync = countSensorData();
+
+    const res = await getInstance().sensorData.findMany({
+        skip: input.skip,
+        take: input.take,
+        orderBy: {
+            updatedAt: Prisma.SortOrder.desc,
+        },
+    });
+
+    const total = await totalAsync;
+
+    return {
+        data: res,
+        take: input.take,
+        skip: input.skip,
+        total,
+    };
+}
+
+function countSensorData(): Promise<number> {
+    return getInstance().sensorData.count();
+}
 
 export async function createSensorData(input: SensorDataInput): Promise<SensorDataOutput> {
-    const res = await repositories.createSensorData({
-        unit: input.unit,
-        type: input.type,
-        timestamp: BigInt(Math.floor(input.timestamp.getTime() / 1000)),
-        value: input.value,
-        latitude: input.latitude,
-        longitude: input.longitude,
-        externalId: input.externalId,
+    const res = await getInstance().sensorData.create({
+        data: {
+            type: input.type,
+            unit: input.unit,
+            value: input.value,
+            latitude: input.latitude,
+            longitude: input.longitude,
+            timestamp: input.timestamp,
+            externalId: input.externalId,
+        },
     });
 
     return {
@@ -68,9 +97,9 @@ export async function createSensorData(input: SensorDataInput): Promise<SensorDa
         longitude: res.longitude,
         latitude: res.latitude,
         value: res.value,
-        timestamp: new Date(Number(res.timestamp)),
-        createdAt: new Date(Number(res.createdAt)),
-        updatedAt: new Date(Number(res.updatedAt)),
+        timestamp: res.timestamp,
+        createdAt: res.createdAt,
+        updatedAt: res.updatedAt,
         type: res.type as typeof input.type,
         unit: res.unit as typeof input.unit,
     };

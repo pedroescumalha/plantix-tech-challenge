@@ -7,3 +7,4 @@ export {
     createSensorData,
     getSensorData,
 } from "./sensorDataService";
+export { initDb } from "./dbClient";

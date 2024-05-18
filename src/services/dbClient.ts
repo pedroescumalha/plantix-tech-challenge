@@ -6,7 +6,7 @@ type InitDbOutput = {
 
 let dbClient: PrismaClient | undefined = undefined;
 
-export function init(): InitDbOutput {
+export function initDb(): InitDbOutput {
     const db = getInstance();
 
     return {

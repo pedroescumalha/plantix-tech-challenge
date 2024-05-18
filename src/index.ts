@@ -1,7 +1,7 @@
 import { buildServer } from "./api";
-import { init } from "./repositories";
+import { initDb } from "./services";
 
-const db = init();
+const db = initDb();
 const server = buildServer();
 
 server.start(async () => {
