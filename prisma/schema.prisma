@@ -7,5 +7,19 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = env("DATABASE_URL")
+  url      = "file:memdb1?mode=memory&cache=shared"
+}
+
+model SensorData {
+  id         Int    @id @default(autoincrement())
+  externalId String @map("external_id")
+  type       String
+  value      String
+  valueType  String @map("value_type")
+  unit       String
+  latitude   Float
+  longitude  Float
+  timestamp  BigInt
+  createdAt  BigInt @default(dbgenerated("extract(epoch from now())")) @map("created_at")
+  updatedAt  BigInt @default(dbgenerated("extract(epoch from now())")) @map("updated_at")
 }

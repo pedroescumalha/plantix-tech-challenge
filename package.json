@@ -16,15 +16,17 @@
     "typescript": "^5.4.5"
   },
   "scripts": {
-    "setup": "yarn install && yarn build && ",
+    "setup": "yarn install && yarn build && npx prisma generate",
+    "create:migration": "npx prisma migrate dev --create-only",
     "start": "node dist/index.js",
     "build": "tsc",
     "dev": "nodemon --watch 'src/**' --ext 'ts,json' --ignore 'src/**/*.spec.ts' --ignore 'src/**/*.test.ts' --exec 'ts-node src/index.ts'",
-    "lint": "eslint ./src",
-    "lint:fix": "eslint ./src --fix",
+    "lint": "npx prisma validate && eslint ./src",
+    "lint:fix": "npx prisma format && eslint ./src --fix",
     "test": "globstar -- node --test --require ts-node/register ./src/**/*.test.ts"
   },
   "dependencies": {
+    "@prisma/client": "5.14.0",
     "fastify": "^4.27.0",
     "fastify-plugin": "^4.5.1",
     "prisma": "^5.14.0",
