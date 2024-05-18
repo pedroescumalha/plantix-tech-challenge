@@ -1,6 +1,7 @@
 import { Prisma } from "@prisma/client";
 import type { PaginatedInput, PaginatedOutput } from "../common/types";
 import { getInstance } from "./dbClient";
+import { ValidationError } from "../common/errors";
 
 export enum SensorType {
     TEMPERATURE = "TEMPERATURE",
@@ -95,7 +96,7 @@ export async function getSensorData(
 
 export async function createSensorData(input: SensorDataInput): Promise<SensorDataOutput> {
     if (!isUnitValid(input.type, input.unit)) {
-        throw new Error();
+        throw new ValidationError("Unit does not correspond to sensor type.");
     }
 
     const res = await getInstance().sensorData.create({
