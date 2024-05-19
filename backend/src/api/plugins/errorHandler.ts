@@ -1,10 +1,10 @@
-import { FastifyReply, FastifyRequest } from "fastify";
+import type { FastifyReply, FastifyRequest } from "fastify";
 import { ValidationError } from "../../common/errors";
 
 type ErrorHandler = (error: Error, request: FastifyRequest, reply: FastifyReply) => void;
 type HttpError = { statusCode: number, message: string };
 
-const statusCodes: Record<string, number> = {
+const statusCodes = {
     [ValidationError.constructor.name]: 400,
     default: 500,
 };
@@ -18,7 +18,7 @@ function getHttpError(error: Error): HttpError {
     let statusCode = statusCodes[error.constructor.name];
     
     if (!statusCode) {
-        statusCode = statusCodes.default!;
+        statusCode = statusCodes.default;
     }
 
     return { statusCode, message: error.message };
