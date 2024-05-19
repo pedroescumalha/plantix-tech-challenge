@@ -50,10 +50,20 @@ type SensorDataOutput = SensorDataInput & {
   updatedAt: Date;
 }
 
-export async function getSensorData(input: PaginatedInput): Promise<PaginatedOutput<SensorDataOutput>> {
+export async function getSensorData(input: PaginatedInput) {
   const res = await fetch(`${url}?take=${input.take}&skip=${input.skip}`, {
     method: 'GET'
   })
 
-  return await res.json()
+  return await res.json() as PaginatedOutput<SensorDataOutput>
+}
+
+export async function createSensorData(input: SensorDataInput) {
+  await fetch(url, {
+    method: 'POST',
+    body: JSON.stringify(input),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
 }
