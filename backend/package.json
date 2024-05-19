@@ -28,6 +28,7 @@
     "test": "globstar -- node --test --require ts-node/register ./src/**/*.test.ts"
   },
   "dependencies": {
+    "@fastify/cors": "^9.0.1",
     "@prisma/client": "5.14.0",
     "fastify": "^4.27.0",
     "fastify-plugin": "^4.5.1",

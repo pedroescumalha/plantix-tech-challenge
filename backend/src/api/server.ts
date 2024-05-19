@@ -1,4 +1,5 @@
 import fastify from "fastify";
+import cors from "@fastify/cors";
 import { routes } from "./routes";
 import { fastifyZodSchemaPlugin, errorHandler } from "./plugins";
 
@@ -23,6 +24,7 @@ export function buildServer(
     }
 
     server.register(fastifyZodSchemaPlugin);
+    server.register(cors);
 
     server.setErrorHandler(errorHandler);
 
