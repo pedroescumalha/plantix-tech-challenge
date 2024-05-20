@@ -85,3 +85,4 @@ This application was only tested on macOS 14.4.1.
 - [React](https://reactjs.org/) - The frontend framework
 - [ShadCN components](https://github.com/shadcn/components) - The base UI components
 - [Tailwind CSS](https://tailwindcss.com/) - The CSS framework
+- [Tanstack Query](https://tanstack.com/query/latest) - Data fetching state management store. It also allows to to periodically refresh the fetched data.
