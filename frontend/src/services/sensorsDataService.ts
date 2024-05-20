@@ -1,4 +1,4 @@
-import { PaginatedInput, PaginatedOutput } from './types'
+import { PaginatedInput, PaginatedOutput } from '../lib/types'
 
 const url = 'http://localhost:8080/v1/sensors/data'
 
@@ -22,7 +22,7 @@ export enum HumidityUnit {
 
 export enum PressureUnit {
   PASCAL = 'Pa',
-  Bar = 'bar',
+  BAR = 'bar',
 }
 
 export enum LightUnit {

@@ -1,6 +1,5 @@
-import React from 'react'
 import { TableHead, TableRow, TableHeader, TableCell, TableBody, Table } from './cn/table'
-import { SensorDataInput } from '../lib/sensorsDataService'
+import { SensorDataInput } from '../services/sensorsDataService'
 
 type SensorDataTableProps = {
   data: SensorDataInput[]

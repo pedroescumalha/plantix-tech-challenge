@@ -23,7 +23,7 @@ export enum HumidityUnit {
 
 export enum PressureUnit {
     PASCAL = "Pa",
-    Bar = "bar",
+    BAR = "bar",
 }
 
 export enum LightUnit {
