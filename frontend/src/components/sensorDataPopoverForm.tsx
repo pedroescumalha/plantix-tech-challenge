@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Button } from './cn/button'
 import { Input } from './cn/input'
 import { Label } from './cn/label'
 import { Popover, PopoverContent, PopoverTrigger } from './cn/popover'
-import { HumidityUnit, LightUnit, PressureUnit, SensorDataInput, SensorType, TemperatureUnit } from '../lib/sensorsDataService'
+import { HumidityUnit, LightUnit, PressureUnit, SensorDataInput, SensorType, TemperatureUnit } from '../services/sensorsDataService'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './cn/select'
 
 type SensorDataPopoverFormProps = {
@@ -28,10 +28,6 @@ export default function SensorDataPopoverForm(props: SensorDataPopoverFormProps)
 
     return Object.values(unitType).map((t) => <SelectItem value={t}>{t}</SelectItem>)
   }
-
-  useEffect(() => {
-    console.log(sensorData)
-  }, [sensorData])
 
   return (
     <Popover>
